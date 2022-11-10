@@ -11,20 +11,21 @@ export const CSSGlobal = createGlobalStyle`
     font-family: sans-serif;
     background-color: ${({ theme }) => theme.backgroundBase};
     color: ${({ theme }) => theme.textColorBase};
+    
+    display: flex;
+    flex: 1;
   }
+
   /* NextJS */
   html {
     display: flex;
     flex-direction: column;
     min-height: 100%;
   }
-  body {
-    display: flex;
-    flex: 1;
-  }
   #__next {
     display: flex;
     flex: 1;
+    width: 100%
   }
   /* Globals */
   button,
