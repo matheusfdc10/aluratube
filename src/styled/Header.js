@@ -5,7 +5,7 @@ export const StyledHeader = styled.div`
     border-bottom: 1px solid ${({ theme }) => theme.borderBase};
 
     img {
-        background-color: blue;
+        background-color: ${({ theme }) => theme.backgroundBase};
         height: 230px;
         width: 100%;
         object-fit: cover;
@@ -20,9 +20,10 @@ export const StyledHeader = styled.div`
         gap: 16px;
 
         img {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
+            background-color: ${({ theme }) => theme.backgroundBase};
+            width: 80px;
+            height: 80px;
+            border-radius: 50%; 
         }
     }
 `;

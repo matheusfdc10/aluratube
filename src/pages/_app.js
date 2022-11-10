@@ -2,6 +2,7 @@ import React from "react";
 import { ThemeProvider } from "styled-components"
 import { CSSGlobal } from "../styled/CSSGlobal"
 import ColorModeProvider, { ColorModeContext } from "../components/Menu/components/ColorMode"
+import RegisterVideo from "../components/RegisterVideo";
 
 const theme = {
   light: {
@@ -32,14 +33,15 @@ function ProviderWrapper(props) {
   )
 }
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, Props }) {
   const contexto = React.useContext(ColorModeContext);
   // console.log(contexto.mode);
   return (
       <ThemeProvider theme={theme[contexto.mode]}>
         <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet"></link>
         <CSSGlobal />
-        <Component {...pageProps} />
+        <Component {...Props} />
+        <RegisterVideo />
       </ThemeProvider>
   )
 }

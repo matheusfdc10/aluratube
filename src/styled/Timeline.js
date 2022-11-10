@@ -47,6 +47,11 @@ export const StyledTimeline = styled.div`
       }
       a {
         scroll-snap-align: start;
+
+        img {
+          border-radius: 10px;
+        }
+        
         span {
           padding: 8px 0px;
           display: block;
