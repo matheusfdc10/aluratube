@@ -5,7 +5,6 @@ import DarkModeSwitch from "./components/DarkModeSwitch";
 export default function Menu(props) {
 
   return (
-    <>
       <StyledMenu>
         <div>
           <Logo/>
@@ -13,6 +12,5 @@ export default function Menu(props) {
         <Search ValorDoFiltro={props.ValorDoFiltro} setValorDoFiltro={props.setValorDoFiltro} />
         <DarkModeSwitch />
       </StyledMenu>
-    </>
   );
 }

@@ -14,7 +14,7 @@ export default function ColorModeProvider(props) {
     }
 
     return (
-        <ColorModeContext.Provider value={{mode: mode, setMode: setMode, toggleMode: toggleMode }}>
+        <ColorModeContext.Provider value={{mode, setMode, toggleMode}}>
             {props.children}
         </ColorModeContext.Provider>
     )

@@ -33,14 +33,14 @@ function ProviderWrapper(props) {
   )
 }
 
-function MyApp({ Component, Props }) {
+function MyApp({ Component, props }) {
   const contexto = React.useContext(ColorModeContext);
   // console.log(contexto.mode);
   return (
       <ThemeProvider theme={theme[contexto.mode]}>
         <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet"></link>
         <CSSGlobal />
-        <Component {...Props} />
+        <Component {...props} />
         <RegisterVideo />
       </ThemeProvider>
   )

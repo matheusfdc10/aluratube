@@ -7,7 +7,7 @@ export const StyledChannels = styled.div`
     border-bottom: 1px solid ${({ theme }) => theme.borderBase};
 
     section {
-        padding-left: 12px;
+        padding: 12px 0px;
 
         div {
             padding-top: 12.5px;
