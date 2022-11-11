@@ -2,6 +2,7 @@ import React from "react";
 import { StyledRegisterVideo } from "../../styled/RegisterVideo";
 import { createClient } from '@supabase/supabase-js'
 import { videoService } from "../../services/videoService";
+import Error from "next/error";
 
 
 
@@ -36,9 +37,9 @@ function getThumbnail(url) {
 export default function RegisterVideo() {
     const service = videoService()
     const formCadastro = useForm({
-        initialValue: { titulo: "", url: "https://www.youtube.com/watch?v=QsqatJxAUtk"}
+        initialValue: { titulo: "", url: "" }
     })
-    
+
     const [formVisivel, setFormVisivel] = React.useState(false)
 
     return (
@@ -51,34 +52,40 @@ export default function RegisterVideo() {
                     <form onSubmit={e => {
                         e.preventDefault()
 
-                        service.setVideo({
-                            title: formCadastro.values.titulo,
-                            url: formCadastro.values.url,
-                            thumb: getThumbnail(formCadastro.values.url),
-                            playlist: "Jogos",
-                        })
-                        .then(oqveio => { 
-                            console.log(oqveio)
-                        })
-                        .catch(err => {
-                            console.log(err)
-                        })
+                        const isVideo = formCadastro.values.url.includes("https://www.youtube.com/watch?v=")
+                        if (isVideo) {
+                            service.setVideo({
+                                title: formCadastro.values.titulo,
+                                url: formCadastro.values.url,
+                                thumb: getThumbnail(formCadastro.values.url),
+                                playlist: "Jogos",
+                            })
+                                .then(oqveio => {
+                                    console.log(oqveio)
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                })
+                            setFormVisivel(false)
+                            formCadastro.clearForm()
 
-                        setFormVisivel(false)
-                        formCadastro.clearForm()
+                        } else {
+                            console.log("Link errado!")
+                        }
+
                     }}>
                         <div>
                             <button type="button" className="close-modal" onClick={() => setFormVisivel(false)}>
                                 X
                             </button>
-                            <input 
-                                placeholder="Titulo do Vídeo" 
+                            <input
+                                placeholder="Titulo do Vídeo"
                                 name="titulo"
                                 value={formCadastro.values.titulo}
                                 onChange={formCadastro.handleChange}
                             />
-                            <input 
-                                placeholder="URL" 
+                            <input
+                                placeholder="URL"
                                 name="url"
                                 value={formCadastro.values.url}
                                 onChange={formCadastro.handleChange}
@@ -88,7 +95,7 @@ export default function RegisterVideo() {
                             </button>
                         </div>
                     </form>
-                ) 
+                )
                 : false}
         </StyledRegisterVideo>
     )

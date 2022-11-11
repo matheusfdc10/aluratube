@@ -18,7 +18,6 @@ function HomePage() {
     React.useEffect(() => {
         service.getAllVideos()
             .then(dados => {
-                console.log(dados.data)
                 // Forma imutavel
                 const novasPlaylists = { ...playlists }
                 dados.data.forEach(video => {
