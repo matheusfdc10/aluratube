@@ -24,8 +24,13 @@ function useForm(props) {
 }
 
 function getThumbnail(url) {
-    const thumb = `${url.split('v=')[1]}`;
-    return `https://img.youtube.com/vi/${thumb.split('&')[0]}/hqdefault.jpg`;
+    if (url?.includes("https://www.youtube.com/watch?v=")) {
+        const thumb = `${url.split('v=')[1]}`;
+        return `https://img.youtube.com/vi/${thumb.split('&')[0]}/hqdefault.jpg`;
+    } else {
+        return false
+    }
+    
 }
 
 function isVideo(url) {
@@ -45,7 +50,7 @@ export default function RegisterVideo() {
     })
 
     const [formVisivel, setFormVisivel] = React.useState(false)
-
+    
     return (
         <StyledRegisterVideo>
             <button className="add-video" onClick={() => setFormVisivel(true)}>
@@ -64,7 +69,7 @@ export default function RegisterVideo() {
                                 title: formCadastro.values.titulo,
                                 url: formCadastro.values.url,
                                 thumb: getThumbnail(formCadastro.values.url),
-                                playlist: "Videos",
+                                playlist: "Vídeos",
                             })
                                 .then(oqveio => {
                                     console.log(oqveio)
@@ -99,17 +104,20 @@ export default function RegisterVideo() {
                             <button type="submit">
                                 Cadastrar
                             </button>
-                            {isVideo(formCadastro.values.url) ?
+                            {/* {isVideo(formCadastro.values.url)*/ getThumbnail(formCadastro.values.url) ?
+                            <>
                                 <div className="video">
-                                    <iframe width="410"
+                                    <img src={getThumbnail(formCadastro.values.url)} />
+                                    {/* <iframe width="410"
                                         height="220"
                                         src={isVideo(formCadastro.values.url)}
                                         title="YouTube video player"
                                         frameBorder="0"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowFullScreen>
-                                    </iframe>
-                                </div> : false}
+                                    </iframe> */}
+                                </div> 
+                                <span>{formCadastro.values.titulo}</span> </>: false}
                         </div>
                     </form>
                 )

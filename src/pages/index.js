@@ -11,9 +11,6 @@ function HomePage() {
     const service = videoService()
     const [valorDoFiltro, setValorDoFiltro] = React.useState("");
     const [playlists, setPlaylists] = React.useState({});
-    // const playlists = {
-    //     "Jogos": []
-    // }
 
     React.useEffect(() => {
         service.getAllVideos()
@@ -29,7 +26,6 @@ function HomePage() {
                 setPlaylists(novasPlaylists);
             });
     }, []);
-
 
     return (
         <div style={{ width: "100%" }} >

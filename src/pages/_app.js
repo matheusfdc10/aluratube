@@ -32,7 +32,7 @@ function ProviderWrapper(props) {
       </ColorModeProvider>
   )
 }
-
+  
 function MyApp({ Component, props }) {
   const contexto = React.useContext(ColorModeContext);
   // console.log(contexto.mode);

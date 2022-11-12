@@ -68,6 +68,13 @@ export const StyledRegisterVideo = styled.div`
     background-color: ${({ theme }) => theme.backgroundBase};
   }
 
+  img {
+    width: 410px;
+    height: 220px;
+    border-radius: 15px;
+    border: 1px solid ${({ theme }) => theme.borderBase};
+  }
+
   .video {
     display: flex;
     -webkit-box-align: center;
@@ -75,5 +82,16 @@ export const StyledRegisterVideo = styled.div`
     -webkit-box-pack: center;
     justify-content: center;
     margin-top: 1rem;
+    
+    /* iframe {
+      border-radius: 15px;
+      border: 1px solid ${({ theme }) => theme.borderBase};
+    } */
   }
+  span {
+    overflow-wrap: break-word;
+    padding: 10px 0px;
+    font-size: 16px;
+    color: ${({ theme }) => theme.textColorBase || "#222222"};
+    }
 `;
