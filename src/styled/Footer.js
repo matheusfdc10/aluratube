@@ -11,5 +11,11 @@ export const StyledFooter = styled.footer`
             font-weight: bold;
             color: #0078d7;
         }
+
+        @media (max-width: 600px) {
+            p {
+                font-size: 13px;
+            }
+        }
     }
 `

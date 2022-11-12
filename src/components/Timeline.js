@@ -17,7 +17,7 @@ export default function Timeline({searchValue , ...props}) {
                                 return titleNormalized.includes(searchValueNormalized)
                             }).map(video => {
                                 return (
-                                    <a key={video.url} href={video.url}>
+                                    <a key={video.id} href={video.url}>
                                         <img src={video.thumb} />
                                         <span>
                                             {video.title}

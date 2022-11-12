@@ -2,7 +2,6 @@ import React from "react";
 import { StyledRegisterVideo } from "../../styled/RegisterVideo";
 import { createClient } from '@supabase/supabase-js'
 import { videoService } from "../../services/videoService";
-import Error from "next/error";
 
 
 
@@ -24,13 +23,18 @@ function useForm(props) {
     }
 }
 
-// BANCO DE DADOS
-const URL = "https://zcednlxbrbcxkxqhrjlw.supabase.co"
-const PUBLIC_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpjZWRubHhicmJjeGt4cWhyamx3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgxNzIwMzAsImV4cCI6MTk4Mzc0ODAzMH0.N8lbbZyT5t0YPqGIqJTrGn1hcO9qy37CoZVLNsQjI4w"
-const supabase = createClient(URL, PUBLIC_KEY)
-
 function getThumbnail(url) {
-    return `https://img.youtube.com/vi/${url.split("v=")[1]}/hqdefault.jpg`
+    const thumb = `${url.split('v=')[1]}`;
+    return `https://img.youtube.com/vi/${thumb.split('&')[0]}/hqdefault.jpg`;
+}
+
+function isVideo(url) {
+    if (url?.includes("https://www.youtube.com/watch?v=")) {
+        const id = `${url.split('v=')[1]}`
+        return `https://www.youtube.com/embed/${id.split('&')[0]}`;
+    } else {
+        return false
+    }
 }
 
 
@@ -52,13 +56,15 @@ export default function RegisterVideo() {
                     <form onSubmit={e => {
                         e.preventDefault()
 
-                        const isVideo = formCadastro.values.url.includes("https://www.youtube.com/watch?v=")
+                        const isVideo = formCadastro.values.titulo != "" &&
+                            formCadastro.values.url.includes("https://www.youtube.com/watch?v=")
+
                         if (isVideo) {
                             service.setVideo({
                                 title: formCadastro.values.titulo,
                                 url: formCadastro.values.url,
                                 thumb: getThumbnail(formCadastro.values.url),
-                                playlist: "Jogos",
+                                playlist: "Videos",
                             })
                                 .then(oqveio => {
                                     console.log(oqveio)
@@ -70,7 +76,7 @@ export default function RegisterVideo() {
                             formCadastro.clearForm()
 
                         } else {
-                            console.log("Link errado!")
+                            console.log("Titulo ou Link invalido")
                         }
 
                     }}>
@@ -79,7 +85,7 @@ export default function RegisterVideo() {
                                 X
                             </button>
                             <input
-                                placeholder="Titulo do Vídeo"
+                                placeholder="Título do Vídeo"
                                 name="titulo"
                                 value={formCadastro.values.titulo}
                                 onChange={formCadastro.handleChange}
@@ -93,6 +99,17 @@ export default function RegisterVideo() {
                             <button type="submit">
                                 Cadastrar
                             </button>
+                            {isVideo(formCadastro.values.url) ?
+                                <div className="video">
+                                    <iframe width="410"
+                                        height="220"
+                                        src={isVideo(formCadastro.values.url)}
+                                        title="YouTube video player"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen>
+                                    </iframe>
+                                </div> : false}
                         </div>
                     </form>
                 )

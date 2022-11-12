@@ -25,7 +25,7 @@ export const StyledTimeline = styled.div`
     overflow: hidden;
     padding: 16px;
     div {
-      
+      border-radius: 10px;
       width: calc(100vw - 16px * 4);
       display: grid;
       grid-gap: 16px;
