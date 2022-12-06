@@ -12,6 +12,7 @@ function HomePage() {
     const [valorDoFiltro, setValorDoFiltro] = React.useState("");
     const [playlists, setPlaylists] = React.useState({});
 
+    // React.useEffect para não ficar em loop
     React.useEffect(() => {
         service.getAllVideos()
             .then(dados => {

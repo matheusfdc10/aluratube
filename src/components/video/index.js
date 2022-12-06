@@ -1,104 +1,27 @@
-// import React from "react";
-// import { StyledRegisterVideo } from "../../styled/RegisterVideo";
-// import { createClient } from '@supabase/supabase-js'
-// import { videoService } from "../../services/videoService";
+import React from "react";
+import { StyledVideo } from "../../styled/Video";
+
+export default function Video({ video, setVideoVisible }) {
 
 
 
-// function useForm(props) {
-//     const [values, setValues] = React.useState(props.initialValue)
-//     return {
-//         values,
-//         handleChange: e => {
-//             const value = e.target.value
-//             const name = e.target.name
-//             setValues({
-//                 ...values,
-//                 [name]: value,
-//             })
-//         },
-//         clearForm() {
-//             setValues({})
-//         }
-//     }
-// }
-
-// // BANCO DE DADOS
-// const URL = "https://zcednlxbrbcxkxqhrjlw.supabase.co"
-// const PUBLIC_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpjZWRubHhicmJjeGt4cWhyamx3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgxNzIwMzAsImV4cCI6MTk4Mzc0ODAzMH0.N8lbbZyT5t0YPqGIqJTrGn1hcO9qy37CoZVLNsQjI4w"
-// const supabase = createClient(URL, PUBLIC_KEY)
-
-// function getThumbnail(url) {
-//     const thumb = `${url.split('v=')[1]}`;
-//     return `https://img.youtube.com/vi/${thumb.split('&')[0]}/hqdefault.jpg`;
-// }
-
-
-// export default function RegisterVideo() {
-//     const service = videoService()
-//     const formCadastro = useForm({
-//         initialValue: { titulo: null, url: null }
-//     })
-
-//     const [formVisivel, setFormVisivel] = React.useState(false)
-
-//     return (
-//         <StyledRegisterVideo>
-//             <button className="add-video" onClick={() => setFormVisivel(true)}>
-//                 +
-//             </button>
-//             {formVisivel
-//                 ? (
-//                     <form onSubmit={e => {
-//                         e.preventDefault()
-
-//                         const isVideo = formCadastro.values.titulo && 
-//                             formCadastro.values.url.includes("https://www.youtube.com/watch?v=" )
-                            
-//                         if (isVideo) {
-//                             service.setVideo({
-//                                 title: formCadastro.values.titulo,
-//                                 url: formCadastro.values.url,
-//                                 thumb: getThumbnail(formCadastro.values.url),
-//                                 playlist: "Jogos",
-//                             })
-//                                 .then(oqveio => {
-//                                     console.log(oqveio)
-//                                 })
-//                                 .catch(err => {
-//                                     console.log(err)
-//                                 })
-//                             setFormVisivel(false)
-//                             formCadastro.clearForm()
-                            
-//                         } else {
-//                             console.log("Titulo ou Link invalido")
-//                         }
-
-//                     }}>
-//                         <div>
-//                             <button type="button" className="close-modal" onClick={() => setFormVisivel(false)}>
-//                                 X
-//                             </button>
-//                             <input
-//                                 placeholder="Título do Vídeo"
-//                                 name="titulo"
-//                                 value={formCadastro.values.titulo}
-//                                 onChange={formCadastro.handleChange}
-//                             />
-//                             <input
-//                                 placeholder="URL"
-//                                 name="url"
-//                                 value={formCadastro.values.url}
-//                                 onChange={formCadastro.handleChange}
-//                             />
-//                             <button type="submit">
-//                                 Cadastrar
-//                             </button>
-//                         </div>
-//                     </form>
-//                 )
-//                 : false}
-//         </StyledRegisterVideo>
-//     )
-// }
+    return (
+        <StyledVideo>
+            <div className="container">
+                <div>
+                    <button type="button" className="close-modal" onClick={() => setVideoVisible(false)}>
+                        X
+                    </button>
+                        <h2>{video.title}</h2>
+                    <div className="video">
+                        <iframe width="642" height="361" src={`https://www.youtube.com/embed/${video.url.split('v=')[1]}`}
+                            title={video.title} frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        />
+                    </div>
+                </div>
+            </div>
+        </StyledVideo>
+    )
+}
