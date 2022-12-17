@@ -4,7 +4,6 @@ import { createClient } from '@supabase/supabase-js'
 import { videoService } from "../../services/videoService";
 
 
-
 function useForm(props) {
     const [values, setValues] = React.useState(props.initialValue)
     return {
@@ -24,20 +23,24 @@ function useForm(props) {
 }
 
 function getThumbnail(url) {
-    if (url?.includes("https://www.youtube.com/watch?v=")) {
-        const thumb = `${url.split('v=')[1]}`;
-        return `https://img.youtube.com/vi/${thumb.split('&')[0]}/hqdefault.jpg`;
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    var isVideo = regExp.test(url)
+    if (isVideo && match && match[7].length == 11) {
+        return `https://img.youtube.com/vi/${match[7]}/hqdefault.jpg`;
     } else {
         return false
     }
-    
 }
 
-function isVideo(url) {
-    if (url?.includes("https://www.youtube.com/watch?v=")) {
-        const id = `${url.split('v=')[1]}`
-        return `https://www.youtube.com/embed/${id.split('&')[0]}`;
+function isUrlVideo(url) {
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    var isVideo = regExp.test(url)
+    if (isVideo && match && match[7].length == 11) {
+        return `https://www.youtube.com/watch?v=${match[7]}`;
     } else {
+        alert('Url inválida.');
         return false
     }
 }
@@ -50,7 +53,7 @@ export default function RegisterVideo() {
     })
 
     const [formVisivel, setFormVisivel] = React.useState(false)
-    
+
     return (
         <StyledRegisterVideo>
             <button className="add-video" onClick={() => setFormVisivel(true)}>
@@ -62,12 +65,12 @@ export default function RegisterVideo() {
                         e.preventDefault()
 
                         const isVideo = formCadastro.values.titulo != "" &&
-                            formCadastro.values.url.includes("https://www.youtube.com/watch?v=")
+                            isUrlVideo(formCadastro.values.url)
 
                         if (isVideo) {
                             service.setVideo({
                                 title: formCadastro.values.titulo,
-                                url: formCadastro.values.url,
+                                url: isUrlVideo(formCadastro.values.url),
                                 thumb: getThumbnail(formCadastro.values.url),
                                 playlist: "Vídeos",
                             })
@@ -105,10 +108,10 @@ export default function RegisterVideo() {
                                 Cadastrar
                             </button>
                             {/* {isVideo(formCadastro.values.url)*/ getThumbnail(formCadastro.values.url) ?
-                            <>
-                                <div className="video">
-                                    <img src={getThumbnail(formCadastro.values.url)} />
-                                    {/* <iframe width="410"
+                                <>
+                                    <div className="video">
+                                        <img src={getThumbnail(formCadastro.values.url)} />
+                                        {/* <iframe width="410"
                                         height="220"
                                         src={isVideo(formCadastro.values.url)}
                                         title="YouTube video player"
@@ -116,8 +119,8 @@ export default function RegisterVideo() {
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowFullScreen>
                                     </iframe> */}
-                                </div> 
-                                <span>{formCadastro.values.titulo}</span> </>: false}
+                                    </div>
+                                    <span>{formCadastro.values.titulo}</span> </> : false}
                         </div>
                     </form>
                 )
